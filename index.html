@@ -474,13 +474,7 @@
     };
 
     function enviarWhatsApp() {
-      const nome = document.getElementById("nome").value.trim();
-      const interesse = document.getElementById("interesse").value;
-      const mensagem = document.getElementById("mensagem").value.trim();
-
-      const texto = `Olá Fernando, meu nome é ${nome || "cliente"}. Tenho interesse em: ${interesse}. ${mensagem || "Gostaria de mais informações."}`;
-      const url = `https://wa.me/message/22EFXNMLLSARM1?text=${encodeURIComponent(texto)}`;
-      window.open(url, "_blank");
+      window.open("https://wa.me/message/22EFXNMLLSARM1", "_blank");
     }
 
     async function ativarNotificacoes() {
