@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fernando Imóveis | CRECI 244254-F</title>
+  <meta name="description" content="App de contato imobiliário do Fernando, CRECI 244254-F, em Mogi Guaçu/SP. Receba notificações de novos imóveis e fale pelo WhatsApp." />
+  <meta name="theme-color" content="#071928" />
+  <link rel="manifest" href="manifest.json" />
+
+  <style>
+    :root {
+      --azul: #0f2f4f;
+      --azul-escuro: #071928;
+      --dourado: #c9a24a;
+      --verde: #25D366;
+      --cinza: #f4f6f8;
+      --texto: #1f2933;
+      --branco: #ffffff;
+      --sombra: 0 15px 35px rgba(0,0,0,.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: var(--cinza);
+      color: var(--texto);
+      line-height: 1.6;
+      padding-bottom: 92px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--azul-escuro), var(--azul));
+      color: var(--branco);
+      padding: 38px 18px 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(201,162,74,.18);
+      right: -90px;
+      top: -80px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: .88rem;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header p {
+      max-width: 680px;
+      margin: 0 auto;
+      opacity: .92;
+      position: relative;
+      z-index: 1;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: -42px auto 0;
+      padding: 0 16px 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--branco);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--sombra);
+    }
+
+    .hero-card {
+      grid-column: span 12;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .profile {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      object-fit: cover;
+      border: 4px solid var(--dourado);
+      box-shadow: 0 14px 32px rgba(7,25,40,.22);
+      background: #fff;
+    }
+
+    h2 {
+      color: var(--azul-escuro);
+      margin-bottom: 10px;
+      font-size: 1.35rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: .2s ease;
+      font-size: .96rem;
+    }
+
+    .btn {
+      box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    }
+
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.04); }
+
+    .icon-only {
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 50%;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .btn-whats {
+      background: var(--verde);
+      color: #fff;
+    }
+
+    .btn-insta {
+      background: #E1306C;
+      color: #fff;
+    }
+
+    .btn-dark {
+      background: var(--azul-escuro);
+      color: #fff;
+    }
+
+    .btn-light {
+      background: #eef2f6;
+      color: var(--azul-escuro);
+    }
+
+    .mini {
+      font-size: .88rem;
+      color: #667085;
+      margin-top: 6px;
+    }
+
+    .span-4 { grid-column: span 4; }
+    .span-6 { grid-column: span 6; }
+    .span-8 { grid-column: span 8; }
+    .span-12 { grid-column: span 12; }
+
+    .property {
+      border: 1px solid #e5e7eb;
+      padding: 14px;
+      border-radius: 16px;
+      margin-top: 12px;
+      background: #fbfcfd;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(201,162,74,.14);
+      color: #6f5514;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .notify-box {
+      background: #fff8df;
+      border: 1px solid #f1d98a;
+      padding: 14px;
+      border-radius: 16px;
+      margin-top: 12px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d0d5dd;
+      border-radius: 14px;
+      margin: 8px 0 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--dourado);
+      box-shadow: 0 0 0 3px rgba(201,162,74,.18);
+    }
+
+    label {
+      font-weight: 700;
+      color: var(--azul-escuro);
+      font-size: .93rem;
+    }
+
+    .chat {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 14px;
+      height: 260px;
+      overflow-y: auto;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 12px;
+    }
+
+    .msg {
+      padding: 10px 12px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      max-width: 88%;
+      font-size: .95rem;
+    }
+
+    .bot {
+      background: #eaf1f8;
+      color: #123;
+    }
+
+    .user {
+      background: var(--azul);
+      color: #fff;
+      margin-left: auto;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255,255,255,.95);
+      border-top: 1px solid #e5e7eb;
+      box-shadow: 0 -10px 24px rgba(0,0,0,.08);
+      padding: 10px 14px;
+      z-index: 20;
+    }
+
+    .bottom-content {
+      max-width: 760px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 92px;
+      background: var(--azul-escuro);
+      color: #fff;
+      padding: 14px 16px;
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+      max-width: 310px;
+      display: none;
+      z-index: 30;
+      animation: subir .35s ease;
+    }
+
+    @keyframes subir {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 18px;
+      color: #667085;
+    }
+
+    @media (max-width: 820px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+      .span-4, .span-6, .span-8 {
+        grid-column: span 12;
+      }
+      .profile {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <span class="badge">Corretor de Imóveis em Mogi Guaçu/SP</span>
+    <h1>Fernando Imóveis</h1>
+    <p>Atendimento rápido para compra, venda e locação. Fale comigo pelo WhatsApp, acompanhe minhas redes sociais e receba avisos de novos imóveis disponíveis.</p>
+  </header>
+
+  <main>
+    <section class="grid">
+      <div class="card hero-card">
+        <div>
+          <div class="profile">
+            <img class="avatar" src="data:image/jpeg;base64,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" alt="Fernando">
+            <div>
+              <h2>Fernando</h2>
+              <p><strong>CRECI 244254-F</strong></p>
+              <p class="mini">Especialista em imóveis em Mogi Guaçu/SP</p>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn btn-whats" href="https://wa.me/message/22EFXNMLLSARM1" target="_blank">Chamar no WhatsApp</a>
+            <a class="btn btn-insta icon-only" href="https://instagram.com/luisfernando.imoveis" target="_blank" title="Instagram">IG</a>
+            <button class="btn btn-light" onclick="ativarNotificacoes()">Ativar notificações</button>
+          </div>
+        </div>
+
+        <div class="notify-box">
+          <strong>Novidades de imóveis</strong>
+          <p class="mini">Ative os avisos para receber notificações sobre novos imóveis disponíveis para venda ou locação.</p>
+          <p id="statusNotificacao" class="mini">Status: notificações ainda não ativadas.</p>
+        </div>
+      </div>
+
+      <div class="card span-4">
+        <h2>Contato rápido</h2>
+        <label>Seu nome</label>
+        <input id="nome" placeholder="Digite seu nome" />
+
+        <label>Interesse</label>
+        <select id="interesse">
+          <option>Comprar imóvel</option>
+          <option>Alugar imóvel</option>
+          <option>Vender meu imóvel</option>
+          <option>Colocar meu imóvel para alugar</option>
+        </select>
+
+        <label>Mensagem</label>
+        <textarea id="mensagem" rows="4" placeholder="Ex: Procuro casa com 2 dormitórios até R$ 2.000..."></textarea>
+
+        <button class="btn btn-whats" style="width:100%" onclick="enviarWhatsApp()">Enviar pelo WhatsApp</button>
+      </div>
+
+      <div class="card span-8">
+        <h2>Imóveis em destaque</h2>
+
+        <div class="property">
+          <span class="tag">Locação</span>
+          <h3>Casa residencial em Mogi Guaçu</h3>
+          <p>Ideal para famílias que procuram conforto, boa localização e atendimento consultivo.</p>
+        </div>
+
+        <div class="property">
+          <span class="tag">Venda</span>
+          <h3>Imóvel comercial para investidores</h3>
+          <p>Opção para quem busca renda, localização estratégica e potencial de valorização.</p>
+        </div>
+
+        <div class="property">
+          <span class="tag">Captação</span>
+          <h3>Tenho clientes procurando imóveis</h3>
+          <p>Se você tem imóvel para vender ou alugar, fale comigo para uma avaliação profissional.</p>
+        </div>
+      </div>
+
+      <div class="card span-6">
+        <h2>IA Imobiliária</h2>
+        <p class="mini">Pergunte sobre mercado imobiliário, documentação, locação, venda, curiosidades ou dicas para escolher um imóvel.</p>
+
+        <div class="chat" id="chat">
+          <div class="msg bot">Olá! Sou a IA imobiliária do Fernando. Posso explicar sobre compra, venda, locação, documentação e tendências do mercado.</div>
+        </div>
+
+        <input id="perguntaIA" placeholder="Digite sua pergunta..." onkeydown="if(event.key==='Enter') responderIA()" />
+        <button class="btn btn-dark" style="width:100%" onclick="responderIA()">Perguntar</button>
+      </div>
+
+      <div class="card span-6">
+        <h2>Notícias e curiosidades</h2>
+        <div id="noticias"></div>
+        <button class="btn btn-light" style="width:100%; margin-top:12px" onclick="gerarCuriosidade()">Gerar nova curiosidade</button>
+      </div>
+
+      <div class="card span-12">
+        <h2>Redes sociais</h2>
+        <p>Acompanhe conteúdos sobre imóveis disponíveis, dicas para locação, venda, documentação e oportunidades em Mogi Guaçu/SP.</p>
+        <div class="actions">
+          <a class="btn btn-insta" href="https://instagram.com/luisfernando.imoveis" target="_blank">@luisfernando.imoveis</a>
+          <a class="btn btn-whats" href="https://wa.me/message/22EFXNMLLSARM1" target="_blank">Falar agora</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="bottom-bar">
+    <div class="bottom-content">
+      <a class="btn btn-whats" href="https://wa.me/message/22EFXNMLLSARM1" target="_blank">WhatsApp</a>
+      <a class="btn btn-insta icon-only" href="https://instagram.com/luisfernando.imoveis" target="_blank" title="Instagram">IG</a>
+    </div>
+  </div>
+
+  <footer>
+    Fernando | CRECI 244254-F | Mogi Guaçu/SP
+  </footer>
+
+  <script>
+    const curiosidades = [
+      "Imóveis bem fotografados tendem a gerar mais interesse nos anúncios, pois transmitem confiança e facilitam a decisão de visita.",
+      "Na locação, responder rápido ao lead aumenta muito a chance de conversão, principalmente quando o imóvel tem alta procura.",
+      "Localização, conservação e documentação organizada são três fatores que impactam diretamente a liquidez de um imóvel.",
+      "Para vender mais rápido, o preço precisa estar alinhado ao mercado, não apenas à expectativa do proprietário.",
+      "Clientes de locação costumam decidir com mais velocidade quando recebem informações claras sobre valor, garantia e disponibilidade."
+    ];
+
+    const respostasIA = {
+      aluguel: "Na locação, o ideal é avaliar valor mensal, condomínio, IPTU, garantia locatícia, localização e prazo de contrato. Para uma análise correta, fale com o Fernando pelo WhatsApp.",
+      comprar: "Para comprar com segurança, verifique documentação, matrícula atualizada, condições de pagamento, financiamento, localização e potencial de valorização.",
+      venda: "Para vender bem, o imóvel precisa de avaliação mercadológica, fotos profissionais, descrição estratégica e divulgação nos canais certos.",
+      documento: "Documentos comuns: matrícula atualizada, escritura, IPTU, documentos pessoais, certidões e contrato. Cada caso exige análise individual.",
+      mercado: "O mercado imobiliário varia por região, preço, oferta, demanda e crédito. Em Mogi Guaçu, uma boa avaliação local é essencial.",
+      default: "Boa pergunta. No mercado imobiliário, a melhor decisão depende do seu objetivo, prazo, orçamento, localização desejada e documentação. Recomendo falar com o Fernando para uma orientação personalizada."
+    };
+
+    function enviarWhatsApp() {
+      const nome = document.getElementById("nome").value.trim();
+      const interesse = document.getElementById("interesse").value;
+      const mensagem = document.getElementById("mensagem").value.trim();
+
+      const texto = `Olá Fernando, meu nome é ${nome || "cliente"}. Tenho interesse em: ${interesse}. ${mensagem || "Gostaria de mais informações."}`;
+      const url = `https://wa.me/message/22EFXNMLLSARM1?text=${encodeURIComponent(texto)}`;
+      window.open(url, "_blank");
+    }
+
+    async function ativarNotificacoes() {
+      const status = document.getElementById("statusNotificacao");
+
+      if (!("Notification" in window)) {
+        status.innerText = "Status: seu navegador não suporta notificações.";
+        mostrarToast("Seu navegador não suporta notificações.");
+        return;
+      }
+
+      try {
+        if ("serviceWorker" in navigator) {
+          await navigator.serviceWorker.register("service-worker.js");
+        }
+
+        const permission = await Notification.requestPermission();
+
+        if (permission === "granted") {
+          status.innerText = "Status: notificações ativadas. Para envio real em massa, conecte Firebase Cloud Messaging.";
+          mostrarToast("Notificações ativadas.");
+
+          if ("serviceWorker" in navigator) {
+            const registration = await navigator.serviceWorker.ready;
+            registration.showNotification("Fernando Imóveis", {
+              body: "Você será avisado quando surgirem novos imóveis disponíveis.",
+              icon: "icon-192.png",
+              badge: "icon-192.png",
+              data: { url: "https://wa.me/message/22EFXNMLLSARM1" }
+            });
+          } else {
+            new Notification("Fernando Imóveis", {
+              body: "Você será avisado quando surgirem novos imóveis disponíveis."
+            });
+          }
+        } else {
+          status.innerText = "Status: permissão de notificação não concedida.";
+          mostrarToast("Notificações não foram ativadas.");
+        }
+      } catch (erro) {
+        status.innerText = "Status: erro ao ativar notificações. Publique em HTTPS para funcionamento completo.";
+        mostrarToast("Erro ao ativar notificações.");
+      }
+    }
+
+    function mostrarToast(texto) {
+      const toast = document.getElementById("toast");
+      toast.innerText = texto;
+      toast.style.display = "block";
+      setTimeout(() => toast.style.display = "none", 5200);
+    }
+
+    function responderIA() {
+      const input = document.getElementById("perguntaIA");
+      const pergunta = input.value.trim();
+      if (!pergunta) return;
+
+      adicionarMsg(pergunta, "user");
+
+      const p = pergunta.toLowerCase();
+      let resposta = respostasIA.default;
+
+      if (p.includes("alug") || p.includes("loca")) resposta = respostasIA.aluguel;
+      if (p.includes("compr")) resposta = respostasIA.comprar;
+      if (p.includes("vend") || p.includes("vender")) resposta = respostasIA.venda;
+      if (p.includes("doc") || p.includes("contrato") || p.includes("matrícula")) resposta = respostasIA.documento;
+      if (p.includes("mercado") || p.includes("valoriz")) resposta = respostasIA.mercado;
+
+      setTimeout(() => adicionarMsg(resposta, "bot"), 500);
+      input.value = "";
+    }
+
+    function adicionarMsg(texto, tipo) {
+      const chat = document.getElementById("chat");
+      const div = document.createElement("div");
+      div.className = `msg ${tipo}`;
+      div.innerText = texto;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function gerarCuriosidade() {
+      const noticias = document.getElementById("noticias");
+      const item = curiosidades[Math.floor(Math.random() * curiosidades.length)];
+      noticias.innerHTML = `
+        <div class="property">
+          <span class="tag">Atualização</span>
+          <h3>Curiosidade imobiliária</h3>
+          <p>${item}</p>
+        </div>
+      `;
+    }
+
+    gerarCuriosidade();
+  </script>
+</body>
+</html>
